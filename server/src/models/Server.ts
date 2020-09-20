@@ -5,7 +5,7 @@ type Callback = (res: any, req: any) => any;
 
 export default class Server {
 
-    private readonly PORT = 3001;
+    private readonly PORT = 3000;
     private readonly server: Application;
 
     constructor() {
