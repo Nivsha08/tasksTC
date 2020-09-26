@@ -5,11 +5,12 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
     import Vue from "vue";
     import Component from "vue-class-component";
     import Header from "@/components/Header.vue";
     import TasksContainer from "@/components/TasksContainer.vue";
+    import Task from "../../../server/src/models/Task";
 
     @Component({
         components: {
@@ -17,7 +18,16 @@
             TasksContainer
         }
     })
-    export default class App extends Vue {}
+    export default class App extends Vue {
+
+        async fetchTasks(): Promise<Task[]> {
+            
+        }
+
+        async beforeMount(): Promise<void> {
+
+        }
+    }
 </script>
 
 <style scoped lang="scss">

@@ -4,7 +4,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
     import Vue from "vue";
     import Component from "vue-class-component";
 
@@ -20,6 +20,6 @@
         background-color: $white;
         width: 60%;
         padding: 2rem 3rem;
-        box-shadow: 0 10px 20px transparentize($darkprimary, .5);
+        box-shadow: 0 0 30px transparentize($darkprimary, .4);
     }
 </style>
