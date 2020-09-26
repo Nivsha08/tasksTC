@@ -1,7 +1,7 @@
 <template>
     <div id="app">
-        <Header title="Tasks" />
-        <TasksContainer />
+        <Header title="Tasks"/>
+        <TasksContainer v-if="tasks" :tasks="tasks" />
     </div>
 </template>
 
@@ -11,6 +11,7 @@
     import Header from "@/components/Header.vue";
     import TasksContainer from "@/components/TasksContainer.vue";
     import Task from "../../../server/src/models/Task";
+    import {fetch} from "@/middleware/tasks";
 
     @Component({
         components: {
@@ -20,12 +21,14 @@
     })
     export default class App extends Vue {
 
-        async fetchTasks(): Promise<Task[]> {
-            
-        }
+        _tasks: Task[] = [];
 
         async beforeMount(): Promise<void> {
+            this._tasks = <Task[]>await fetch();
+        }
 
+        get tasks(): Task[] {
+            return this._tasks;
         }
     }
 </script>

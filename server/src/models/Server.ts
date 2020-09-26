@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 import {Application} from "express-serve-static-core";
 
 type Callback = (res: any, req: any) => any;
@@ -10,6 +11,7 @@ export default class Server {
 
     constructor() {
         this.server = this.initServer();
+        this.server.use(cors());
         this.listen(this.PORT);
     };
 

@@ -1,14 +1,19 @@
 <template>
     <div class="container">
-
+        {{ tasks }}
     </div>
 </template>
 
 <script lang="ts">
-    import Vue from "vue";
+    import Vue, {PropType} from "vue";
     import Component from "vue-class-component";
+    import Task from "../../../server/src/models/Task";
 
-    @Component
+    @Component({
+        props: {
+            tasks: { type: Object as PropType<Task[]>, required: true }
+        }
+    })
     export default class TasksContainer extends Vue {
 
     }
