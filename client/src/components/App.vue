@@ -1,24 +1,23 @@
 <template>
     <div id="app">
-
+        <Header title="Tasks" />
+        <TasksContainer />
     </div>
 </template>
 
 <script>
     import Vue from "vue";
     import Component from "vue-class-component";
-    import HelloWorld from "./HelloWorld";
+    import Header from "@/components/Header.vue";
+    import TasksContainer from "@/components/TasksContainer.vue";
 
     @Component({
         components: {
-            HelloWorld
+            Header,
+            TasksContainer
         }
     })
-    export default class App extends Vue {
-
-        message = "this is a message from a class component!";
-
-    }
+    export default class App extends Vue {}
 </script>
 
 <style scoped lang="scss">
@@ -27,6 +26,9 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         background: linear-gradient(200deg, $primary 0%, $darkprimary 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         text-align: center;
         color: #2c3e50;
         padding: 0;
