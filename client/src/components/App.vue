@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header title="Tasks"/>
-        <TasksContainer v-if="tasks" :tasks="tasks" />
+        <TasksContainer :tasks="tasks" />
     </div>
 </template>
 
@@ -21,10 +21,10 @@
     })
     export default class App extends Vue {
 
-        _tasks: Task[] = [];
+        _tasks: Task[] = null;
 
         async beforeMount(): Promise<void> {
-            this._tasks = <Task[]>await fetch();
+            this._tasks = <Task[]>(await fetch());
         }
 
         get tasks(): Task[] {

@@ -5,17 +5,18 @@
 </template>
 
 <script lang="ts">
-    import Vue, {PropType} from "vue";
+    import Vue from "vue";
     import Component from "vue-class-component";
     import Task from "../../../server/src/models/Task";
+    import {Prop} from "vue-property-decorator";
 
-    @Component({
-        props: {
-            tasks: { type: Object as PropType<Task[]>, required: true }
-        }
-    })
+    @Component
     export default class TasksContainer extends Vue {
-
+        @Prop tasks: Task[];
+        
+        mounted(): void {
+            console.log(this.tasks);
+        }
     }
 </script>
 
