@@ -21,14 +21,10 @@
     })
     export default class App extends Vue {
 
-        _tasks: Task[] = null;
+        tasks: Task[] = null;
 
         async beforeMount(): Promise<void> {
-            this._tasks = <Task[]>(await fetch());
-        }
-
-        get tasks(): Task[] {
-            return this._tasks;
+            this.tasks = <Task[]>(await fetch());
         }
     }
 </script>
