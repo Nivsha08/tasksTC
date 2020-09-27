@@ -20,4 +20,12 @@ export default class TasksCollection {
         return this.items;
     }
 
+    getCompleted(): Task[] {
+        return this.items.filter(task => task.isDone);
+    }
+
+    getPending(): Task[] {
+        return this.items.filter(task => !task.isDone);
+    }
+
 }

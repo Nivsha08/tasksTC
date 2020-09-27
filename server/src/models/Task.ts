@@ -2,13 +2,17 @@ import IDGenerator from "../utils/IDGenerator";
 
 export default class Task {
 
-    private id: string;
-    private title: string;
-    private isDone: boolean;
+    private _id: string;
+    private _title: string;
+    private _isDone: boolean;
 
     constructor(id: string, title: string, isDone: boolean) {
-        this.id = IDGenerator.generate();
-        this.title = title;
-        this.isDone = isDone;
+        this._id = IDGenerator.generate();
+        this._title = title;
+        this._isDone = isDone;
     }
+
+    get id(): string { return this._id; }
+    get title(): string { return this._title; }
+    get isDone(): boolean { return this._isDone; }
 }
