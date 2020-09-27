@@ -1,6 +1,9 @@
 <template>
     <div class="container">
-        <Task v-for="(task, i) in tasks" :task="task" :key="i" class="task" />
+        <TasksSummary :tasksCollection="tasksCollection" />
+        <div class="tasks-list">
+            <Task v-for="(task, i) in tasks" :task="task" :key="i" class="task" />
+        </div>
     </div>
 </template>
 
@@ -11,9 +14,11 @@
     import TasksCollection from "../../../server/src/models/TasksCollection";
     import Task from "@/components/Task";
     import TaskModel from "../../../server/src/models/Task";
+    import TasksSummary from "@/components/TasksSummary.vue";
 
     @Component({
         components: {
+            TasksSummary,
             Task
         }
     })
@@ -31,10 +36,15 @@
         border-radius: 2rem;
         background-color: $white;
         width: 60%;
+        height: 500px;
         padding: 2rem 3rem;
         box-shadow: 0 0 30px transparentize($darkprimary, .4);
     }
-    .task:not(:last-of-type) {
-        border-bottom: 1px solid darken($foreground, 5%);
+    .tasks-list {
+        max-height: 450px;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 </style>

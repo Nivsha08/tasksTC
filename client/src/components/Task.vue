@@ -24,6 +24,9 @@
         justify-content: space-between;
         align-items: center;
         transition: all .2s 0s ease-out;
+        &:not(:last-of-type) {
+            border-bottom: 1px solid darken($foreground, 5%);
+        }
         &:hover {
             cursor: pointer;
             background-color: lighten($primary, 30%);

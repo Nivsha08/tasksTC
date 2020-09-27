@@ -23,6 +23,6 @@
             font-weight: 800;
             font-size: 3.5rem;
         }
-        padding: 4rem 0;
+        padding: 4rem 0 2rem 0;
     }
 </style>
