@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header title="Tasks"/>
-        <TasksContainer :tasks="tasks" />
+        <TasksContainer :tasksCollection="tasksCollection" />
     </div>
 </template>
 
@@ -10,8 +10,9 @@
     import Component from "vue-class-component";
     import Header from "@/components/Header.vue";
     import TasksContainer from "@/components/TasksContainer.vue";
-    import Task from "../../../server/src/models/Task";
     import {fetch} from "@/middleware/tasks";
+    import TasksCollection from "../../../server/src/models/TasksCollection";
+    import Task from "../../../server/src/models/Task";
 
     @Component({
         components: {
@@ -21,10 +22,10 @@
     })
     export default class App extends Vue {
 
-        tasks: Task[] = null;
+        tasksCollection: TasksCollection = null;
 
         async beforeMount(): Promise<void> {
-            this.tasks = <Task[]>(await fetch());
+            this.tasksCollection = new TasksCollection(<Task[]>await fetch());
         }
     }
 </script>
