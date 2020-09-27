@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="wrapper">
         <TasksSummary :tasksCollection="tasksCollection" />
         <div class="tasks-list">
-            <Task v-for="(task, i) in tasks" :task="task" :key="i" class="task" />
+            <Task v-for="(task, i) in tasks" :task="task" :key="i" />
         </div>
     </div>
 </template>
@@ -32,16 +32,17 @@
 </script>
 
 <style scoped lang="scss">
-    .container {
+    .wrapper {
         border-radius: 2rem;
         background-color: $white;
         width: 60%;
-        height: 500px;
+        max-height: 500px;
         padding: 2rem 3rem;
         box-shadow: 0 0 30px transparentize($darkprimary, .4);
     }
     .tasks-list {
-        max-height: 450px;
+        max-height: 400px;
+        /*border: 1px solid red;*/
         overflow-y: scroll;
         &::-webkit-scrollbar {
             display: none;

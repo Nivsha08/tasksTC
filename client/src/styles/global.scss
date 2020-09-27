@@ -7,4 +7,23 @@ html, body {
     max-height: 100vh;
     overflow: hidden;
     font-family: "Nunito", sans-serif;
+    * {
+        box-sizing: initial;
+    }
+}
+
+// Switches global styling
+.custom-control-label {
+    cursor: pointer;
+}
+.custom-control-input:focus {
+    display: none;
+}
+.custom-control-input:not(:disabled):active ~ .custom-control-label::before {
+    border-color: transparentize($success, .7);
+    background-color: transparentize($success, .7);
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: $success;
+    background-color: $success;
 }

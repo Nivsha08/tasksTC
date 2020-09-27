@@ -1,7 +1,7 @@
 <template>
     <div class="task-wrapper">
-        <span>{{ task.title }}</span>
-        <span>{{ task.isDone }}</span>
+        <span class="title" :class="{done: task.isDone}">{{ task.title }}</span>
+        <BFormCheckbox v-model="task.isDone" switch size="lg" />
     </div>
 </template>
 
@@ -9,8 +9,13 @@
     import Vue, {PropType} from "vue";
     import Component from "vue-class-component";
     import {Prop} from "vue-property-decorator";
+    import {BFormCheckbox} from "bootstrap-vue";
 
-    @Component
+    @Component({
+        components: {
+            BFormCheckbox
+        }
+    })
     export default class Task extends Vue {
         @Prop({ type: Object as PropType<Task> }) task!;
     }
@@ -18,7 +23,7 @@
 
 <style scoped lang="scss">
     .task-wrapper {
-        padding: 1rem 2rem;
+        padding: .8rem 1rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -31,6 +36,14 @@
             cursor: pointer;
             background-color: lighten($primary, 30%);
             border-color: $primary;
+        }
+    }
+    .title {
+        font-size: 1rem;
+        transition: all .2s 0s ease-out;
+        &.done {
+            opacity: .3;
+            text-decoration: line-through;
         }
     }
 </style>
