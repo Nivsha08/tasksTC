@@ -28,6 +28,9 @@ export default class DBClient {
 
     private initDatabaseConnection(client: MongoClient, dbConfig: DBConfig): void {
         this.db = client.db(dbConfig.name);
-        this.db.collection(dbConfig.collectionName);
+    }
+
+    async insertOne(collectionName: string, object: any): Promise<void> {
+        await this.db?.collection(collectionName).insertOne(object);
     }
 }
