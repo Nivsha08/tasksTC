@@ -11,28 +11,35 @@ export default class Server {
 
     private readonly PORT = 3000;
     private readonly server: Application;
-    private readonly dbClient: DBClient;
+    private dbClient: DBClient | null;
 
     constructor() {
+        this.dbClient = null;
         this.server = this.initServer();
         this.server.use(cors());
         this.listen(this.PORT);
-        this.dbClient = this.connectToDatabase(dbConfig);
-        console.log("db client", this.dbClient);
         // this.dbClient.insertOne(dbConfig.collectionName, {
         //     "hello": "world!"
         // });
-        setTimeout(() => {
-            console.log("db client", this.dbClient);
-        }, 5000);
+        // setTimeout(() => {
+        //     console.log("db client", this.dbClient);
+        // }, 5000);
     };
 
     private initServer(): Application {
         return express();
     };
 
-    private connectToDatabase(dbConfig: DBConfig): DBClient {
-        return new DBClient(dbConfig);
+    async connectToDatabase(dbConfig: DBConfig): Promise<void> {
+        this.dbClient = new DBClient();
+        try {
+            await this.dbClient.initConnection(dbConfig);
+            console.log("Database Connection created successfully.");
+        }
+        catch (error) {
+            console.log("Database connection failed.");
+        }
+        await this.dbClient.insertOne();
     }
 
     private listen(port: number): void {
