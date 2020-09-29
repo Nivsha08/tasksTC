@@ -1,4 +1,5 @@
 import IDGenerator from "../utils/IDGenerator";
+const _ = require("lodash");
 
 export interface ITask {
     id: string;
@@ -8,7 +9,7 @@ export interface ITask {
 
 export default class Task implements ITask {
 
-    id: string;
+    readonly id: string;
     title: string;
     completed: boolean;
 
@@ -16,6 +17,10 @@ export default class Task implements ITask {
         this.id = IDGenerator.generate();
         this.title = task.title;
         this.completed = task.completed;
+    }
+
+    clone(): Task {
+        return _.cloneDeep(this);
     }
 
 }

@@ -1,4 +1,4 @@
-import {ITask} from "./Task";
+import Task, {ITask} from "./Task";
 
 export default class TasksCollection {
 
@@ -17,7 +17,7 @@ export default class TasksCollection {
     }
 
     getAll(): ITask[] {
-        return this.items;
+        return this.items.map((t: ITask) => new Task(t));
     }
 
     getCompleted(): ITask[] {

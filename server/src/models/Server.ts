@@ -19,6 +19,7 @@ export default class Server {
         this.dbClient = null;
         this.server = this.initServer();
         this.server.use(cors());
+        this.server.use(express.json());
         this.listen(this.PORT);
     };
 
@@ -49,9 +50,18 @@ export default class Server {
         this.server.get(path, callback);
     }
 
+    put(path: string, callback: Callback): any {
+        this.server.put(path, callback);
+    }
+
     async fetchTasks(queryOptions?: object): Promise<Task[]> {
         const tasks = await TaskModel.find(queryOptions);
         return tasks.map((t: ITask) => new Task(t));
+    }
+
+    async updateTask(updatedTask: ITask): Promise<void> {
+        const task = new TaskModel(updatedTask);
+        await task.updateOne();
     }
 
 }

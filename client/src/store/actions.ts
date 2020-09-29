@@ -8,7 +8,8 @@ import {ITask} from "../../../server/src/models/Task";
 const serverConfig = require( "@/../serverconfig.json");
 
 export enum ActionTypes {
-    FETCH_TASKS = "FETCH_TASKS"
+    FETCH_TASKS = "FETCH_TASKS",
+    UPDATE_TASK = "UPDATE_TASK"
 }
 
 type Context = ActionContext<State, State>;
@@ -20,5 +21,9 @@ export const actions: Actions = {
         const response: AxiosResponse = await Axios.get(`${serverConfig.url}/tasks`);
         const collection: TasksCollection = new TasksCollection(<ITask[]>response.data);
         context.commit(MutationTypes.SET_TASKS, collection);
+    },
+    async [ActionTypes.UPDATE_TASK](context: Context, updatedTask: ITask): Promise<void> {
+        const response: AxiosResponse =
+            await Axios.put(`${serverConfig.url}/tasks/${updatedTask.id}`, updatedTask);
     }
 };

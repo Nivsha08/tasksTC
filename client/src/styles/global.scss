@@ -27,3 +27,7 @@ html, body {
     border-color: $success;
     background-color: $success;
 }
+.custom-switch .custom-control-input:disabled:checked ~ .custom-control-label::before {
+    border-color: transparentize($success, .7);
+    background-color: transparentize($success, .7);
+}
