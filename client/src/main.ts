@@ -5,9 +5,9 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import "./styles/global.scss";
 import { BootstrapVue } from "bootstrap-vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCheckCircle, faClock } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faClock, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faCheckCircle, faClock);
+library.add(faCheckCircle, faClock, faSpinner);
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
