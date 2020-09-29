@@ -10,9 +10,9 @@
     import Component from "vue-class-component";
     import Header from "@/components/Header.vue";
     import TasksContainer from "@/components/TasksContainer.vue";
-    import {fetch} from "@/middleware/tasks";
     import TasksCollection from "../../../server/src/models/TasksCollection";
-    import Task from "../../../server/src/models/Task";
+    import {ActionTypes} from "@/store/actions";
+    import {GetterTypes} from "@/store/getters";
 
     @Component({
         components: {
@@ -22,10 +22,12 @@
     })
     export default class App extends Vue {
 
-        tasksCollection: TasksCollection = null;
+        get tasksCollection(): TasksCollection {
+            return this.$store.getters[GetterTypes.GET_TASKS];
+        }
 
         async beforeMount(): Promise<void> {
-            this.tasksCollection = new TasksCollection(<Task[]>await fetch());
+            await this.$store.dispatch(ActionTypes.FETCH_TASKS);
         }
     }
 </script>

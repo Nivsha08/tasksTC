@@ -1,10 +1,10 @@
-import Task from "../../../server/src/models/Task";
+import TasksCollection from "../../../server/src/models/TasksCollection";
 
 export type State = {
-    tasks: Task[]
+    tasks: TasksCollection | null
 };
 
 export const state: State = {
-    tasks: []
+    tasks: null
 };
 
