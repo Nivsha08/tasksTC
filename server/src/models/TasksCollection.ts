@@ -21,11 +21,11 @@ export default class TasksCollection {
     }
 
     getCompleted(): Task[] {
-        return this.items.filter(task => task.isDone);
+        return this.items.filter(task => task.completed);
     }
 
     getPending(): Task[] {
-        return this.items.filter(task => !task.isDone);
+        return this.items.filter(task => !task.completed);
     }
 
 }

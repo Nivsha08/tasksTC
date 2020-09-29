@@ -3,7 +3,9 @@ import DBClient from "../database/DBClient";
 const express = require("express");
 const cors = require("cors");
 import {Application} from "express-serve-static-core";
-import {config as dbConfig, DBConfig} from "../database/dbconfig";
+import {DBConfig} from "../database/dbconfig";
+import Task, {ITask} from "./Task";
+import {Task as TaskModel} from "../database/models";
 
 type Callback = (res: any, req: any) => any;
 
@@ -18,12 +20,6 @@ export default class Server {
         this.server = this.initServer();
         this.server.use(cors());
         this.listen(this.PORT);
-        // this.dbClient.insertOne(dbConfig.collectionName, {
-        //     "hello": "world!"
-        // });
-        // setTimeout(() => {
-        //     console.log("db client", this.dbClient);
-        // }, 5000);
     };
 
     private initServer(): Application {
@@ -39,7 +35,6 @@ export default class Server {
         catch (error) {
             console.log("Database connection failed.");
         }
-        await this.dbClient.insertOne();
     }
 
     private listen(port: number): void {
@@ -52,6 +47,11 @@ export default class Server {
 
     get(path: string, callback: Callback): any {
         this.server.get(path, callback);
+    }
+
+    async fetchTasks(queryOptions?: object): Promise<Task[]> {
+        const tasks = await TaskModel.find(queryOptions);
+        return tasks.map((t: ITask) => new Task(t));
     }
 
 }

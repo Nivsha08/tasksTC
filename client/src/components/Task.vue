@@ -1,7 +1,7 @@
 <template>
     <div class="task-wrapper">
-        <span class="title" :class="{done: task.isDone}">{{ task.title }}</span>
-        <BFormCheckbox v-model="task.isDone" switch size="lg" />
+        <span class="title" :class="{done: task.completed}">{{ task.title }}</span>
+        <BFormCheckbox v-model="task.completed" switch size="lg" />
     </div>
 </template>
 

@@ -1,6 +1,7 @@
 import {Db, MongoClient} from "mongodb";
 import {DBConfig} from "./dbconfig";
 import {Mongoose} from "mongoose";
+import {Task} from "./models";
 
 const mongoose = require("mongoose");
 
@@ -19,16 +20,4 @@ export default class DBClient {
         return await mongoose.connect(dbConfig.url, this.clientOptions);
     }
 
-    private initDatabaseConnection(client: MongoClient, dbConfig: DBConfig): void {
-        this.db = client.db(dbConfig.name);
-    }
-
-    async insertOne(object?: any): Promise<void> {
-        const Task = mongoose.model("Task", {
-            title: { type: String },
-            isDone: { type: Boolean }
-        });
-        const newTask = new Task({ title: "hello world!", isDone: false });
-        await newTask.save();
-    }
 }

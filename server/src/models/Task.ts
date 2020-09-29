@@ -1,18 +1,21 @@
 import IDGenerator from "../utils/IDGenerator";
 
-export default class Task {
+export interface ITask {
+    id: string;
+    title: string;
+    completed: boolean;
+}
 
-    private _id: string;
-    private _title: string;
-    private _isDone: boolean;
+export default class Task implements ITask {
 
-    constructor(id: string, title: string, isDone: boolean) {
-        this._id = IDGenerator.generate();
-        this._title = title;
-        this._isDone = isDone;
+    id: string;
+    title: string;
+    completed: boolean;
+
+    constructor(task: ITask) {
+        this.id = IDGenerator.generate();
+        this.title = task.title;
+        this.completed = task.completed;
     }
 
-    get id(): string { return this._id; }
-    get title(): string { return this._title; }
-    get isDone(): boolean { return this._isDone; }
 }
