@@ -1,30 +1,30 @@
-import Task from "./Task";
+import {ITask} from "./Task";
 
 export default class TasksCollection {
 
-    private readonly items: Task[];
+    private readonly items: ITask[];
 
-    constructor(tasks?: Task[]) {
+    constructor(tasks?: ITask[]) {
         this.items = tasks ? tasks : [];
     }
 
-    addAll(tasks: Task[]): void {
+    addAll(tasks: ITask[]): void {
         tasks.forEach(this.add);
     }
 
-    add(task: Task): void {
+    add(task: ITask): void {
         this.items.push(task);
     }
 
-    getAll(): Task[] {
+    getAll(): ITask[] {
         return this.items;
     }
 
-    getCompleted(): Task[] {
+    getCompleted(): ITask[] {
         return this.items.filter(task => task.completed);
     }
 
-    getPending(): Task[] {
+    getPending(): ITask[] {
         return this.items.filter(task => !task.completed);
     }
 
