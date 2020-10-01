@@ -24,9 +24,9 @@ export default class TasksService {
         return tasks.map((t: ITask) => new Task(t));
     }
 
-    async updateTask(updatedTask: ITask): Promise<void> {
-        const task = new TaskModel(updatedTask);
-        await task.updateOne();
+    async updateTask(task: ITask): Promise<void> {
+        const updatedTask = new TaskModel(task);
+        await updatedTask.save();
     }
 
 }

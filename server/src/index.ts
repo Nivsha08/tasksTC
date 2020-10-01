@@ -20,6 +20,12 @@ server.get("/tasks", async (req: any, res: any): Promise<void> => {
 });
 
 server.put("/tasks/:id", async (req: any, res: any): Promise<void> => {
-    const updatedTask = req.body;
-    await tasksService.updateTask(updatedTask);
+    try {
+        const updatedTask = req.body;
+        await tasksService.updateTask(updatedTask);
+        res.send({ success: true });
+    }
+    catch (error) {
+        res.send({ success: false, error });
+    }
 });

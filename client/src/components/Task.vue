@@ -24,11 +24,17 @@
         disabled: boolean = false;
 
         async toggleTaskStatus(): void {
-            this.disabled = true;
-            const updatedTask = this.task.clone();
-            updatedTask.completed = !this.task.completed;
-            await this.$store.dispatch(ActionTypes.UPDATE_TASK, updatedTask);
-            this.disabled = false;
+            try {
+                this.disabled = true;
+                this.task.completed = !this.task.completed;
+                await this.$store.dispatch(ActionTypes.UPDATE_TASK, this.task);
+            }
+            catch (error) {
+                console.log(error);
+            }
+            finally {
+                this.disabled = false;
+            }
         }
     }
 </script>
