@@ -1,4 +1,4 @@
-import Server from "./models/Server";
+import Server, {HttpMethods} from "./models/Server";
 import TasksCollection from "./models/TasksCollection";
 import {config as dbConfig} from "./database/dbconfig";
 import Task from "./models/Task";
@@ -9,23 +9,40 @@ const tasksService: TasksService = new TasksService();
 
 tasksService.initDBConnection(dbConfig);
 
-server.get("/health", async (req: any, res: any): Promise<void> => {
+server.route(HttpMethods.GET, "/health", async (req: any, res: any): Promise<void> => {
     res.send("This is madness");
 });
 
-server.get("/tasks", async (req: any, res: any): Promise<void> => {
+server.route(HttpMethods.GET, "/tasks", async (req: any, res: any): Promise<void> => {
     const tasks: Task[] = await tasksService.fetchTasks();
     const collection: TasksCollection = new TasksCollection(tasks);
     res.send(collection.getAll());
 });
 
-server.put("/tasks/:id", async (req: any, res: any): Promise<void> => {
+server.route(HttpMethods.POST, "/tasks", async (req: any, res: any): Promise<void> => {
     try {
-        const updatedTask = req.body;
-        await tasksService.updateTask(updatedTask);
+        await tasksService.addTask(req.body);
         res.send({ success: true });
     }
     catch (error) {
         res.send({ success: false, error });
     }
+});
+
+server.route(HttpMethods.DELETE, "/tasks/:id", async (req: any, res: any): Promise<void> => {
+    console.log(req.params.id);
+    const task: Task = (await tasksService.fetchTasks({ id: req.params.id }))[0];
+    res.send(task);
+});
+
+server.route(HttpMethods.PUT, "/tasks/:id", async (req: any, res: any): Promise<void> => {
+    throw new Error("Unimplemented method UPDATE");
+    // try {
+    //     const updatedTask = req.body;
+    //     await tasksService.updateTask(updatedTask);
+    //     res.send({ success: true });
+    // }
+    // catch (error) {
+    //     res.send({ success: false, error });
+    // }
 });

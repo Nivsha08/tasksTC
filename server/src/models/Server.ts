@@ -2,6 +2,12 @@ const express = require("express");
 const cors = require("cors");
 import {Application} from "express-serve-static-core";
 
+export enum HttpMethods {
+    GET = "get",
+    POST = "post",
+    PUT = "put",
+    DELETE = "delete"
+}
 type Callback = (res: any, req: any) => any;
 
 export default class Server {
@@ -28,12 +34,8 @@ export default class Server {
         }
     }
 
-    get(path: string, callback: Callback): any {
-        this.server.get(path, callback);
-    }
-
-    put(path: string, callback: Callback): any {
-        this.server.put(path, callback);
+    route(method: HttpMethods, path: string, callback: Callback): any {
+        this.server[method](path, callback);
     }
 
 }

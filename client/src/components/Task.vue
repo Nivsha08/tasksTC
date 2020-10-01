@@ -2,7 +2,7 @@
     <div class="task-wrapper" :class="{ disabled }">
         <span class="title" :class="{done: task.completed}">{{ task.title }}</span>
         <BFormCheckbox v-model="task.completed" @change="toggleTaskStatus"
-                       :disabled="disabled"  switch size="lg" />
+                       :disabled="disabled"  switch size="md" />
     </div>
 </template>
 
@@ -12,7 +12,6 @@
     import {Prop} from "vue-property-decorator";
     import {BFormCheckbox} from "bootstrap-vue";
     import {ActionTypes} from "@/store/actions";
-    import {ITask} from "../../../server/src/models/Task";
 
     @Component({
         components: {
@@ -41,12 +40,14 @@
 
 <style scoped lang="scss">
     .task-wrapper {
-        padding: .8rem 1rem;
+        padding: .4rem 1rem;
+        font-size: .9rem;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         transition: all .2s 0s ease-out;
+        border-bottom: 1px solid darken($foreground, 5%);
         &.disabled {
             opacity: .3;
             &:hover {
@@ -54,9 +55,6 @@
                 background-color: initial;
                 border-color: darken($foreground, 5%);
             }
-        }
-        &:not(:last-of-type) {
-            border-bottom: 1px solid darken($foreground, 5%);
         }
         &:hover {
             cursor: pointer;

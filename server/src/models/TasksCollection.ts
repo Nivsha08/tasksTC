@@ -17,7 +17,7 @@ export default class TasksCollection {
     }
 
     getAll(): ITask[] {
-        return this.items.map((t: ITask) => new Task(t));
+        return this.items.map((t: ITask) => Task.parse(t));
     }
 
     getCompleted(): ITask[] {

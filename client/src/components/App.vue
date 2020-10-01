@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <Header title="Tasks"/>
-        <TasksContainer :tasksCollection="tasksCollection" />
+        <TasksContainer :tasksCollection="tasksCollection" @refresh="refreshTasks" />
     </div>
 </template>
 
@@ -26,8 +26,12 @@
             return this.$store.getters[GetterTypes.GET_TASKS];
         }
 
-        async beforeMount(): Promise<void> {
+        async refreshTasks(): Promise<void> {
             await this.$store.dispatch(ActionTypes.FETCH_TASKS);
+        }
+
+        async beforeMount(): Promise<void> {
+            await this.refreshTasks();
         }
     }
 </script>

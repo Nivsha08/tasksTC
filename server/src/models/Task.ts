@@ -13,10 +13,18 @@ export default class Task implements ITask {
     title: string;
     completed: boolean;
 
-    constructor(task: ITask) {
+    constructor(title: string) {
         this.id = IDGenerator.generate();
-        this.title = task.title;
-        this.completed = task.completed;
+        this.title = title;
+        this.completed = false;
+    }
+
+    static parse(task: ITask) {
+        return {
+            id: task.id,
+            title: task.title,
+            completed: task.completed
+        }
     }
 
     clone(): Task {

@@ -21,12 +21,13 @@ export default class TasksService {
 
     async fetchTasks(queryOptions?: object): Promise<Task[]> {
         const tasks = await TaskModel.find(queryOptions);
-        return tasks.map((t: ITask) => new Task(t));
+        return tasks.map((t: ITask) => Task.parse(t));
     }
 
-    async updateTask(task: ITask): Promise<void> {
-        const updatedTask = new TaskModel(task);
-        await updatedTask.save();
+    async addTask(task: ITask): Promise<void> {
+        const model = new TaskModel(task);
+        await model.save();
     }
+
 
 }

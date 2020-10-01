@@ -3,6 +3,7 @@
         <div v-if="tasksCollection">
             <TasksSummary :tasksCollection="tasksCollection" />
             <div class="tasks-list">
+                <AddNewTask @taskAdded="$emit(refreshEventName)" />
                 <Task v-for="(task, i) in tasks" :task="task" :key="i" />
             </div>
         </div>
@@ -19,20 +20,26 @@
     import TaskModel from "../../../server/src/models/Task";
     import TasksSummary from "@/components/TasksSummary.vue";
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+    import AddNewTask from "@/components/AddNewTask.vue";
+    import {AppEvents} from "@/constants";
 
     @Component({
         components: {
             FontAwesomeIcon,
             TasksSummary,
-            Task
+            Task,
+            AddNewTask
         }
     })
     export default class TasksContainer extends Vue {
         @Prop({ type: Object as PropType<TasksCollection> }) tasksCollection!;
+        readonly refreshEventName: string = AppEvents.REFRESH_TASKS;
 
         get tasks(): TaskModel[] {
             return this.tasksCollection?.getAll();
         }
+
+
     }
 </script>
 

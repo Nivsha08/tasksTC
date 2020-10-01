@@ -3,12 +3,13 @@ import {MutationTypes} from "@/store/mutations";
 import {ActionContext} from "vuex";
 import {State} from "@/store/state";
 import TasksCollection from "../../../server/src/models/TasksCollection";
-import {ITask} from "../../../server/src/models/Task";
+import Task, {ITask} from "../../../server/src/models/Task";
 
 const serverConfig = require( "@/../serverconfig.json");
 
 export enum ActionTypes {
     FETCH_TASKS = "FETCH_TASKS",
+    ADD_TASK = "ADD_TASK",
     UPDATE_TASK = "UPDATE_TASK"
 }
 
@@ -21,6 +22,9 @@ export const actions: Actions = {
         const response: AxiosResponse = await Axios.get(`${serverConfig.url}/tasks`);
         const collection: TasksCollection = new TasksCollection(<ITask[]>response.data);
         context.commit(MutationTypes.SET_TASKS, collection);
+    },
+    async [ActionTypes.ADD_TASK](context: Context, task: Task): Promise<void> {
+        await Axios.post(`${serverConfig.url}/tasks`, task);
     },
     async [ActionTypes.UPDATE_TASK](context: Context, updatedTask: ITask): Promise<void> {
         const response: AxiosResponse =
