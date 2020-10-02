@@ -4,7 +4,8 @@
             <TasksSummary :tasksCollection="tasksCollection" />
             <AddNewTask @taskAdded="$emit(refreshEventName)" />
             <div class="tasks-list">
-                <Task v-for="(task, i) in tasks" :task="task" :key="i" />
+                <Task v-for="task in tasks" :task="task" :key="task.id"
+                      @removeTask="removeTask(task.id)" />
             </div>
         </div>
         <FontAwesomeIcon v-else icon="spinner" class="loading-spinner" />
@@ -22,6 +23,7 @@
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
     import AddNewTask from "@/components/AddNewTask.vue";
     import {AppEvents} from "@/constants";
+    import {ActionTypes} from "@/store/actions";
 
     @Component({
         components: {
@@ -37,6 +39,16 @@
 
         get tasks(): TaskModel[] {
             return this.tasksCollection?.getAll();
+        }
+
+        async removeTask(taskID: string): void {
+            try {
+                await this.$store.dispatch(ActionTypes.DELETE_TASK, taskID);
+                this.$emit(AppEvents.REFRESH_TASKS);
+            }
+            catch (error) {
+                console.warn(error);
+            }
         }
 
 

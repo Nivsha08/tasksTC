@@ -5,10 +5,18 @@ import "bootstrap-vue/dist/bootstrap-vue.css";
 import "./styles/global.scss";
 import { BootstrapVue } from "bootstrap-vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {faCheckCircle, faClock, faSpinner, faCheck, faTimes, faChevronRight} from "@fortawesome/free-solid-svg-icons";
+import {
+  faCheckCircle,
+  faClock,
+  faSpinner,
+  faCheck,
+  faTimes,
+  faChevronRight,
+  faTrash
+} from "@fortawesome/free-solid-svg-icons";
 import {store} from "@/store/store";
 
-library.add(faCheckCircle, faClock, faSpinner, faCheck, faTimes, faChevronRight );
+library.add(faCheckCircle, faClock, faSpinner, faCheck, faTimes, faChevronRight, faTrash );
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 

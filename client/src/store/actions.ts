@@ -10,7 +10,8 @@ const serverConfig = require( "@/../serverconfig.json");
 export enum ActionTypes {
     FETCH_TASKS = "FETCH_TASKS",
     ADD_TASK = "ADD_TASK",
-    UPDATE_TASK = "UPDATE_TASK"
+    UPDATE_TASK = "UPDATE_TASK",
+    DELETE_TASK = "DELETE_TASK"
 }
 
 type Context = ActionContext<State, State>;
@@ -27,7 +28,9 @@ export const actions: Actions = {
         await Axios.post(`${serverConfig.url}/tasks`, task);
     },
     async [ActionTypes.UPDATE_TASK](context: Context, updatedTask: ITask): Promise<void> {
-        const response: AxiosResponse =
-            await Axios.put(`${serverConfig.url}/tasks/${updatedTask.id}`, updatedTask);
+        await Axios.put(`${serverConfig.url}/tasks/${updatedTask.id}`, updatedTask);
+    },
+    async [ActionTypes.DELETE_TASK](context: Context, taskID: string): Promise<void> {
+        await Axios.delete(`${serverConfig.url}/tasks/${taskID}`);
     }
 };

@@ -1,8 +1,13 @@
 <template>
     <div class="task-wrapper" :class="{ disabled }">
-        <span class="title" :class="{done: task.completed}">{{ task.title }}</span>
-        <BFormCheckbox v-model="task.completed" @change="toggleTaskStatus"
-                       :disabled="disabled"  switch size="md" />
+        <div class="title" :class="{done: task.completed}">
+            {{ task.title }}
+        </div>
+        <div class="buttons">
+            <BFormCheckbox v-model="task.completed" @change="toggleTaskStatus"
+                           :disabled="disabled" switch size="md"  class="item" />
+            <FontAwesomeIcon @click="removeTask" icon="trash" class="item delete-task-button" />
+        </div>
     </div>
 </template>
 
@@ -12,10 +17,13 @@
     import {Prop} from "vue-property-decorator";
     import {BFormCheckbox} from "bootstrap-vue";
     import {ActionTypes} from "@/store/actions";
+    import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+    import {AppEvents} from "@/constants";
 
     @Component({
         components: {
-            BFormCheckbox
+            BFormCheckbox,
+            FontAwesomeIcon
         }
     })
     export default class Task extends Vue {
@@ -27,13 +35,16 @@
                 this.disabled = true;
                 this.task.completed = !this.task.completed;
                 await this.$store.dispatch(ActionTypes.UPDATE_TASK, this.task);
-            }
-            catch (error) {
-                console.log(error);
-            }
-            finally {
+            } catch (error) {
+                console.warn(error);
+            } finally {
                 this.disabled = false;
             }
+        }
+
+        removeTask(): void {
+            this.disabled = true;
+            this.$emit(AppEvents.REMOVE_TASK);
         }
     }
 </script>
@@ -68,6 +79,20 @@
         &.done {
             opacity: .3;
             text-decoration: line-through;
+        }
+    }
+    .buttons {
+        display: flex;
+        align-items: center;
+        .item {
+            margin: 0 .3rem;
+        }
+    }
+    .delete-task-button {
+        color: transparentize($black, .75);
+        transition: all .3s 0s ease-out;
+        &:hover {
+            color: $danger;
         }
     }
 </style>

@@ -30,9 +30,13 @@ server.route(HttpMethods.POST, "/tasks", async (req: any, res: any): Promise<voi
 });
 
 server.route(HttpMethods.DELETE, "/tasks/:id", async (req: any, res: any): Promise<void> => {
-    console.log(req.params.id);
-    const task: Task = (await tasksService.fetchTasks({ id: req.params.id }))[0];
-    res.send(task);
+    try {
+        await tasksService.deleteTask(req.params.id);
+        res.send({ success: true });
+    }
+    catch (error) {
+        res.send({ success: false, error });
+    }
 });
 
 server.route(HttpMethods.PUT, "/tasks/:id", async (req: any, res: any): Promise<void> => {

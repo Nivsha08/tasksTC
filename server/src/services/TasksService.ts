@@ -29,5 +29,8 @@ export default class TasksService {
         await model.save();
     }
 
+    async deleteTask(taskID: string): Promise<void> {
+        await TaskModel.deleteOne({ id: taskID });
+    }
 
 }
