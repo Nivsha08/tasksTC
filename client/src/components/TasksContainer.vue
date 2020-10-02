@@ -1,9 +1,9 @@
 <template>
     <div class="wrapper">
-        <div v-if="tasksCollection">
+        <div v-if="tasksCollection" class="tasks-wrapper">
             <TasksSummary :tasksCollection="tasksCollection" />
+            <AddNewTask @taskAdded="$emit(refreshEventName)" />
             <div class="tasks-list">
-                <AddNewTask @taskAdded="$emit(refreshEventName)" />
                 <Task v-for="(task, i) in tasks" :task="task" :key="i" />
             </div>
         </div>
@@ -49,13 +49,16 @@
         background-color: $white;
         width: 60%;
         min-height: 250px;
-        max-height: 500px;
+        height: 450px;
         padding: 2rem 3rem;
         box-shadow: 0 0 30px transparentize($darkprimary, .4);
         transition: all .5s 0s ease-out;
     }
+    .tasks-wrapper {
+        height: 100%;
+    }
     .tasks-list {
-        max-height: 400px;
+        max-height: 65%;
         overflow-y: scroll;
         &::-webkit-scrollbar {
             display: none;

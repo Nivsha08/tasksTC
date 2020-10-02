@@ -2,7 +2,10 @@
     <div class="new-task-wrapper">
         <input v-model="title" type="text" class="input" :placeholder="placeholder"
                @keypress.enter="done" @keypress.esc="cancel">
-        <div class="buttons">
+        <div class="prepend-icons">
+            <FontAwesomeIcon icon="chevron-right" class="icon chevron" />
+        </div>
+        <div class="append-icons">
             <FontAwesomeIcon @click="cancel" icon="times" class="icon cancel-button" />
             <FontAwesomeIcon @click="done" icon="check" class="icon done-button" />
         </div>
@@ -54,17 +57,16 @@
         display: flex;
         flex-direction: row;
         position: relative;
+        margin-bottom: 1rem;
     }
     .input {
         flex-basis: 100%;
-        padding: .4rem 1rem;
+        padding: .8rem 3rem;
         font-size: .9rem;
         border: none;
-        background-color: transparentize($warning, .9);
-        border-bottom: 1px solid transparent;
+        border-bottom: 1px solid $primary;
         transition: all .3s 0s ease-out;
         &::placeholder {
-            color: $warning;
             transition: all .3s 0s ease-out;
         }
         &:focus {
@@ -77,13 +79,22 @@
             background-color: lighten($foreground, 3%);
         }
     }
-    .buttons {
+    .icons-wrapper {
         position: absolute;
-        top: 0;
-        right: 0;
         height: 100%;
         display: flex;
         align-items: center;
+    }
+    .prepend-icons {
+        @extend .icons-wrapper;
+        .chevron {
+            margin: 0 1rem;
+        }
+    }
+    .append-icons {
+        @extend .icons-wrapper;
+        top: 0;
+        right: 0;
         .icon {
             cursor: pointer;
             opacity: .8;
