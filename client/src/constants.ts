@@ -1,5 +1,7 @@
 export enum AppEvents {
     REFRESH_TASKS = "refresh",
     TASK_ADDED = "taskAdded",
-    REMOVE_TASK = "removeTask"
+    TASK_UPDATED = "taskUpdated",
+    REMOVE_TASK = "removeTask",
+    CLEAR_COMPLETED = "clearCompleted"
 }

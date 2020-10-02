@@ -14,8 +14,8 @@ export default class TasksService {
             console.log("Database Connection created successfully.");
         }
         catch (error) {
-            console.log(error);
             console.log("Database connection failed.");
+            console.warn(error);
         }
     }
 
@@ -29,8 +29,16 @@ export default class TasksService {
         await model.save();
     }
 
+    async updateTask(taskID: string, updatedTask: Task): Promise<void> {
+        await TaskModel.updateOne({ id: taskID }, updatedTask);
+    }
+
     async deleteTask(taskID: string): Promise<void> {
         await TaskModel.deleteOne({ id: taskID });
+    }
+
+    async deleteCompletedTasks(): Promise<void> {
+        await TaskModel.deleteMany({ completed: true });
     }
 
 }

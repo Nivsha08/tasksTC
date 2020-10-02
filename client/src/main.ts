@@ -3,6 +3,7 @@ import App from "./components/App.vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import "./styles/global.scss";
+import "./styles/animations.scss";
 import { BootstrapVue } from "bootstrap-vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -12,11 +13,11 @@ import {
   faCheck,
   faTimes,
   faChevronRight,
-  faTrash
+  faTrash, faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
 import {store} from "@/store/store";
 
-library.add(faCheckCircle, faClock, faSpinner, faCheck, faTimes, faChevronRight, faTrash );
+library.add(faCheckCircle, faClock, faSpinner, faCheck, faTimes, faChevronRight, faTrash, faThumbsUp );
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 

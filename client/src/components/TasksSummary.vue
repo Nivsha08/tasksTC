@@ -2,14 +2,15 @@
     <div class="summary-wrapper">
         <span>{{ total }} tasks to complete</span>
         <div>
-            <span class="completed">
-                <FontAwesomeIcon icon="check-circle" />
-                {{ completed }} completed
-             </span>
-            <span class="pending">
-                <FontAwesomeIcon icon="clock" />
-                {{ pending }} pending
-            </span>
+            <div class="pending">
+                {{ pending }} pending <FontAwesomeIcon icon="clock" />
+            </div>
+            <div class="completed">
+                {{ completed }} completed <FontAwesomeIcon icon="check-circle" />
+            </div>
+            <transition name="slide-fade">
+                <ClearCompleted v-if="completed > 0" @clearCompleted="clearCompleted" />
+            </transition>
         </div>
     </div>
 </template>
@@ -20,9 +21,12 @@
     import {Prop} from "vue-property-decorator";
     import TasksCollection from "../../../server/src/models/TasksCollection";
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+    import ClearCompleted from "@/components/ClearCompleted.vue";
+    import {AppEvents} from "@/constants";
 
     @Component({
         components: {
+            ClearCompleted,
             FontAwesomeIcon
         }
     })
@@ -40,6 +44,10 @@
         get pending(): number {
             return this.tasksCollection?.getPending().length;
         }
+
+        clearCompleted(): void {
+            this.$emit(AppEvents.CLEAR_COMPLETED);
+        }
     }
 </script>
 
@@ -51,7 +59,8 @@
         font-weight: bold;
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
+        text-align: end;
     }
     .completed {
         padding: 0 .3rem;

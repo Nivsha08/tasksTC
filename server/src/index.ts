@@ -29,6 +29,16 @@ server.route(HttpMethods.POST, "/tasks", async (req: any, res: any): Promise<voi
     }
 });
 
+server.route(HttpMethods.DELETE, "/tasks", async (req: any, res: any): Promise<void> => {
+    try {
+        await tasksService.deleteCompletedTasks();
+        res.send({ success: true });
+    }
+    catch (error) {
+        res.send({ success: false, error });
+    }
+});
+
 server.route(HttpMethods.DELETE, "/tasks/:id", async (req: any, res: any): Promise<void> => {
     try {
         await tasksService.deleteTask(req.params.id);
@@ -40,13 +50,12 @@ server.route(HttpMethods.DELETE, "/tasks/:id", async (req: any, res: any): Promi
 });
 
 server.route(HttpMethods.PUT, "/tasks/:id", async (req: any, res: any): Promise<void> => {
-    throw new Error("Unimplemented method UPDATE");
-    // try {
-    //     const updatedTask = req.body;
-    //     await tasksService.updateTask(updatedTask);
-    //     res.send({ success: true });
-    // }
-    // catch (error) {
-    //     res.send({ success: false, error });
-    // }
+    try {
+        const updatedTask = req.body;
+        await tasksService.updateTask(req.params.id, updatedTask);
+        res.send({ success: true });
+    }
+    catch (error) {
+        res.send({ success: false, error });
+    }
 });

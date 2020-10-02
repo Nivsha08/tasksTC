@@ -35,6 +35,7 @@
                 this.disabled = true;
                 this.task.completed = !this.task.completed;
                 await this.$store.dispatch(ActionTypes.UPDATE_TASK, this.task);
+                this.$emit(AppEvents.TASK_UPDATED);
             } catch (error) {
                 console.warn(error);
             } finally {

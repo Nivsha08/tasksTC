@@ -11,7 +11,8 @@ export enum ActionTypes {
     FETCH_TASKS = "FETCH_TASKS",
     ADD_TASK = "ADD_TASK",
     UPDATE_TASK = "UPDATE_TASK",
-    DELETE_TASK = "DELETE_TASK"
+    DELETE_TASK = "DELETE_TASK",
+    DELETE_COMPLETED_TASKS = "DELETE_COMPLETED_TASKS"
 }
 
 type Context = ActionContext<State, State>;
@@ -32,5 +33,8 @@ export const actions: Actions = {
     },
     async [ActionTypes.DELETE_TASK](context: Context, taskID: string): Promise<void> {
         await Axios.delete(`${serverConfig.url}/tasks/${taskID}`);
+    },
+    async [ActionTypes.DELETE_COMPLETED_TASKS](context: Context): Promise<void> {
+        await Axios.delete(`${serverConfig.url}/tasks`);
     }
 };

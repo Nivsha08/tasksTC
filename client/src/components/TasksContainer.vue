@@ -1,10 +1,11 @@
 <template>
     <div class="wrapper">
         <div v-if="tasksCollection" class="tasks-wrapper">
-            <TasksSummary :tasksCollection="tasksCollection" />
-            <AddNewTask @taskAdded="$emit(refreshEventName)" />
+            <TasksSummary :tasksCollection="tasksCollection" @clearCompleted="clearCompleted" />
+            <AddNewTask @taskAdded="refreshTasks" />
             <div class="tasks-list">
                 <Task v-for="task in tasks" :task="task" :key="task.id"
+                      @taskUpdated="refreshTasks"
                       @removeTask="removeTask(task.id)" />
             </div>
         </div>
@@ -35,15 +36,28 @@
     })
     export default class TasksContainer extends Vue {
         @Prop({ type: Object as PropType<TasksCollection> }) tasksCollection!;
-        readonly refreshEventName: string = AppEvents.REFRESH_TASKS;
 
         get tasks(): TaskModel[] {
             return this.tasksCollection?.getAll();
         }
 
-        async removeTask(taskID: string): void {
+        refreshTasks(): void {
+            this.$emit(AppEvents.REFRESH_TASKS);
+        }
+
+        async removeTask(taskID: string): Promise<void> {
             try {
                 await this.$store.dispatch(ActionTypes.DELETE_TASK, taskID);
+                this.$emit(AppEvents.REFRESH_TASKS);
+            }
+            catch (error) {
+                console.warn(error);
+            }
+        }
+
+        async clearCompleted(): Promise<void> {
+            try {
+                await this.$store.dispatch(ActionTypes.DELETE_COMPLETED_TASKS);
                 this.$emit(AppEvents.REFRESH_TASKS);
             }
             catch (error) {
@@ -70,8 +84,10 @@
         height: 100%;
     }
     .tasks-list {
-        max-height: 65%;
+        max-height: 55%;
         overflow-y: scroll;
+        padding-top: .3rem;
+        box-shadow: inset 0 7px 9px -7px transparentize($black, .8);
         &::-webkit-scrollbar {
             display: none;
         }
@@ -82,10 +98,5 @@
         animation: spin 1.2s 0s infinite ease-in-out;
         color: $darkprimary;
         opacity: .3;
-    }
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        80% { transform: rotate(360deg); }
-        100% { transform: rotate(360deg); }
     }
 </style>

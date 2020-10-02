@@ -147,16 +147,4 @@
             &.cancel-button:hover { color: $danger; }
         }
     }
-    @keyframes blink {
-        0% { opacity: 1; }
-        30% { opacity: 0; }
-        60% { opacity: 1; }
-        100% { opacity: 1; }
-    }
-    .fade-enter-active, .fade-leave-active {
-        transition: opacity .2s 0s ease-out;
-    }
-    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-        opacity: 0;
-    }
 </style>
