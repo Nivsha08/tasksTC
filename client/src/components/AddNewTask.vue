@@ -88,6 +88,8 @@
     .prepend-icons {
         @extend .icons-wrapper;
         .chevron {
+            color: $primary;
+            animation: blink 1.5s .5s ease-out infinite;
             margin: 0 1rem;
         }
     }
@@ -105,5 +107,11 @@
             &.done-button { color: $success; }
             &.cancel-button:hover { color: $danger; }
         }
+    }
+    @keyframes blink {
+        0% { opacity: 1; }
+        30% { opacity: 0; }
+        60% { opacity: 1; }
+        100% { opacity: 1; }
     }
 </style>
