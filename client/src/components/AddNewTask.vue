@@ -1,14 +1,21 @@
 <template>
     <div class="new-task-wrapper">
-        <input v-model="title" type="text" class="input" :placeholder="placeholder"
-               @keypress.enter="done" @keypress.esc="cancel">
-        <div class="prepend-icons">
-            <FontAwesomeIcon icon="chevron-right" class="icon chevron" />
-        </div>
-        <div class="append-icons">
-            <FontAwesomeIcon @click="cancel" icon="times" class="icon cancel-button" />
-            <FontAwesomeIcon @click="done" icon="check" class="icon done-button" />
-        </div>
+        <transition name="fade" mode="out-in" class="transition-group">
+            <div key="1" class="add-new-task" v-if="!taskAddedIndication">
+                <input v-model="title" type="text" class="input" :placeholder="placeholder"
+                       @keypress.enter="done" @keydown.esc="cancel">
+                <div class="prepend-icons">
+                    <FontAwesomeIcon icon="chevron-right" class="icon chevron" />
+                </div>
+                <div class="append-icons">
+                    <FontAwesomeIcon @click="cancel" icon="times" class="icon cancel-button" />
+                    <FontAwesomeIcon @click="done" icon="check" class="icon done-button" />
+                </div>
+            </div>
+            <div key="2" class="task-added" v-if="taskAddedIndication">
+                {{ taskAddedMessage }}
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -28,7 +35,10 @@
     export default class AddNewTask extends Vue {
 
         readonly placeholder: string = "Add a new task";
+        readonly taskAddedMessage: string = "done";
+        readonly indicationDurationMs: number = 2500;
         title: string = "";
+        taskAddedIndication: boolean = false;
 
         cancel(): void {
             this.title = "";
@@ -40,12 +50,20 @@
                     const task = new Task(this.title);
                     await this.$store.dispatch(ActionTypes.ADD_TASK, task);
                     this.$emit(AppEvents.TASK_ADDED);
+                    this.showSuccessIndication();
                     this.title = "";
                 }
             }
             catch (error) {
                 console.warn(error);
             }
+        }
+
+        showSuccessIndication(): void {
+            this.taskAddedIndication = true;
+            setTimeout(() => {
+                this.taskAddedIndication = false;
+            }, this.indicationDurationMs);
         }
 
     }
@@ -57,7 +75,28 @@
         display: flex;
         flex-direction: row;
         position: relative;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    .transition-group {
+        all: inherit;
+        margin: 0;
+    }
+    .add-new-task {
+        all: inherit;
+        margin: 0;
+    }
+    .task-added {
+        all: inherit;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        color: $success;
+        background-color: transparentize($success, .9);
+        padding: .8rem 1rem;
+        font-weight: bold;
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: .2rem;
     }
     .input {
         flex-basis: 100%;
@@ -113,5 +152,11 @@
         30% { opacity: 0; }
         60% { opacity: 1; }
         100% { opacity: 1; }
+    }
+    .fade-enter-active, .fade-leave-active {
+        transition: opacity .2s 0s ease-out;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
     }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="summary-wrapper">
-        <span>{{ total }} tasks</span>
+        <span>{{ total }} tasks to complete</span>
         <div>
             <span class="completed">
                 <FontAwesomeIcon icon="check-circle" />
