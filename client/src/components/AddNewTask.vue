@@ -39,23 +39,27 @@
         readonly indicationDurationMs: number = 2500;
         title: string = "";
         taskAddedIndication: boolean = false;
+        inProgress: boolean = false;
 
         cancel(): void {
             this.title = "";
         }
 
         async done(): void {
+            if (this.inProgress || this.title.length === 0) return;
+            this.inProgress = true;
+            const task = new Task(this.title);
+            this.title = "";
             try {
-                if (this.title.length  > 0) {
-                    const task = new Task(this.title);
-                    await this.$store.dispatch(ActionTypes.ADD_TASK, task);
-                    this.$emit(AppEvents.TASK_ADDED);
-                    this.showSuccessIndication();
-                    this.title = "";
-                }
+                await this.$store.dispatch(ActionTypes.ADD_TASK, task);
+                this.$emit(AppEvents.TASK_ADDED);
+                this.showSuccessIndication();
             }
             catch (error) {
                 console.warn(error);
+            }
+            finally {
+                this.inProgress = false;
             }
         }
 

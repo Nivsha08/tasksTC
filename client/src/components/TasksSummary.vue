@@ -53,7 +53,7 @@
 
 <style scoped lang="scss">
     .summary-wrapper {
-        padding: 1rem 1rem 3rem 1rem;
+        padding: 1rem 1rem 1rem 1rem;
         color: $black;
         font-size: 1.1rem;
         font-weight: bold;
