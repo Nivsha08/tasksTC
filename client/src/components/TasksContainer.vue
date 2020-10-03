@@ -4,9 +4,17 @@
             <TasksSummary :tasksCollection="tasksCollection" @clearCompleted="clearCompleted" />
             <AddNewTask @taskAdded="refreshTasks" />
             <div class="tasks-list">
-                <Task v-for="task in tasks" :task="task" :key="task.id"
-                      @taskUpdated="refreshTasks"
-                      @removeTask="removeTask(task.id)" />
+                <Draggable v-model="tasks" v-bind="dragOptions" handle=".drag-handle"
+                           @start="dragging = true" @end="dragging = false">
+                    <transition-group type="transition" :name="!dragging ? 'flip-list' : null">
+                        <div v-for="task in tasks" :key="task.id" class="task-item">
+                            <ClickableIcon icon="grip-horizontal" class="drag-handle" />
+                            <Task :task="task" class="task"
+                                  @taskUpdated="refreshTasks"
+                                  @removeTask="removeTask(task.id)" />
+                        </div>
+                    </transition-group>
+                </Draggable>
             </div>
         </div>
         <FontAwesomeIcon v-else icon="spinner" class="loading-spinner" />
@@ -25,9 +33,13 @@
     import AddNewTask from "@/components/AddNewTask.vue";
     import {AppEvents} from "@/constants";
     import {ActionTypes} from "@/store/actions";
+    import Draggable from "vuedraggable";
+    import ClickableIcon from "@/components/ClickableIcon.vue";
 
     @Component({
         components: {
+            Draggable,
+            ClickableIcon,
             FontAwesomeIcon,
             TasksSummary,
             Task,
@@ -36,6 +48,13 @@
     })
     export default class TasksContainer extends Vue {
         @Prop({ type: Object as PropType<TasksCollection> }) tasksCollection!;
+        readonly dragOptions = {
+            animation: 200,
+            disabled: false,
+            group: "description",
+            ghostClass: "ghost"
+        };
+        dragging: boolean = false;
 
         get tasks(): TaskModel[] {
             return this.tasksCollection?.getAll();
@@ -91,6 +110,18 @@
         &::-webkit-scrollbar {
             display: none;
         }
+        .task-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            .drag-handle {
+                text-align: center;
+                flex-basis: 3%;
+                color: transparentize($black, .95);
+            }
+            .task { flex-basis: 93%; }
+        }
     }
     .loading-spinner {
         margin: 2rem 0;
@@ -98,5 +129,12 @@
         animation: spin 1.2s 0s infinite ease-in-out;
         color: $darkprimary;
         opacity: .3;
+    }
+    .flip-list-move {
+        transition: transform 0.5s;
+    }
+    .ghost {
+        opacity: .2;
+        background: #c8ebfb;
     }
 </style>

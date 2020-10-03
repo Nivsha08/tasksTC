@@ -4,7 +4,7 @@
         <TaskTitle v-else :task="task" />
         <div class="buttons">
             <BFormCheckbox v-model="task.completed" @change="toggleTaskStatus"
-                           :disabled="disabled" switch size="md" class="item" />
+                           :disabled="disabled" size="md" class="item" />
             <ClickableIcon @click="onEditStart" icon="pencil-alt"
                            class="item edit-task-button" :class="{ editing: editInProgress }" />
             <ClickableIcon @click="removeTask" icon="trash" class="item delete-task-button" />
