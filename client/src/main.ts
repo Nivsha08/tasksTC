@@ -13,11 +13,12 @@ import {
   faCheck,
   faTimes,
   faChevronRight,
-  faTrash, faThumbsUp,
+  faTrash, faThumbsUp, faPencilAlt
 } from "@fortawesome/free-solid-svg-icons";
 import {store} from "@/store/store";
 
-library.add(faCheckCircle, faClock, faSpinner, faCheck, faTimes, faChevronRight, faTrash, faThumbsUp );
+library.add(faCheckCircle, faClock, faSpinner, faCheck, faTimes,
+    faChevronRight, faTrash, faThumbsUp, faPencilAlt );
 Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 

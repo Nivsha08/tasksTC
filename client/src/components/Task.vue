@@ -1,11 +1,12 @@
 <template>
     <div class="task-wrapper" :class="{ disabled }">
-        <div class="title" :class="{done: task.completed}">
-            {{ task.title }}
-        </div>
+        <EditTaskTitle v-if="editInProgress" :task="task" />
+        <TaskTitle v-else :task="task" />
         <div class="buttons">
             <BFormCheckbox v-model="task.completed" @change="toggleTaskStatus"
-                           :disabled="disabled" switch size="md"  class="item" />
+                           :disabled="disabled" switch size="md" class="item" />
+            <FontAwesomeIcon @click="editTask" :icon="editInProgress ? 'check' : 'pencil-alt'"
+                             class="item edit-task-button" />
             <FontAwesomeIcon @click="removeTask" icon="trash" class="item delete-task-button" />
         </div>
     </div>
@@ -19,27 +20,46 @@
     import {ActionTypes} from "@/store/actions";
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
     import {AppEvents} from "@/constants";
+    import EditTaskTitle from "@/components/EditTaskTitle.vue";
+    import TaskTitle from "@/components/TaskTitle.vue";
+    import {ITask} from "../../../server/src/models/Task";
 
     @Component({
         components: {
+            TaskTitle,
+            EditTaskTitle,
             BFormCheckbox,
             FontAwesomeIcon
         }
     })
     export default class Task extends Vue {
         @Prop({ type: Object as PropType<Task> }) task!;
+        editInProgress: boolean = false;
         disabled: boolean = false;
 
-        async toggleTaskStatus(): void {
+        async updateTask(updatedTask: ITask): Promise<void> {
             try {
                 this.disabled = true;
-                this.task.completed = !this.task.completed;
-                await this.$store.dispatch(ActionTypes.UPDATE_TASK, this.task);
+                await this.$store.dispatch(ActionTypes.UPDATE_TASK, updatedTask);
                 this.$emit(AppEvents.TASK_UPDATED);
             } catch (error) {
                 console.warn(error);
             } finally {
                 this.disabled = false;
+            }
+        }
+
+        async toggleTaskStatus(): void {
+            this.task.completed = !this.task.completed;
+            await this.updateTask(this.task);
+        }
+
+        editTask(): void {
+            if (!this.editInProgress) {
+                this.editInProgress = true;
+            }
+            else {
+                this.editInProgress = false;
             }
         }
 
@@ -69,31 +89,26 @@
             }
         }
         &:hover {
-            cursor: pointer;
-            background-color: lighten($primary, 30%);
-            border-color: $primary;
-        }
-    }
-    .title {
-        font-size: 1rem;
-        transition: all .2s 0s ease-out;
-        &.done {
-            opacity: .3;
-            text-decoration: line-through;
+            background-color: transparentize($primary, .9);
+            border-color: transparentize($primary, .3);
         }
     }
     .buttons {
         display: flex;
         align-items: center;
-        .item {
-            margin: 0 .3rem;
-        }
     }
-    .delete-task-button {
+    .icon-button {
         color: transparentize($black, .75);
         transition: all .3s 0s ease-out;
-        &:hover {
-            color: $danger;
-        }
+        margin: 0 .5rem;
+        &:hover { cursor: pointer; }
+    }
+    .edit-task-button {
+        @extend .icon-button;
+        &:hover { color: $info; }
+    }
+    .delete-task-button {
+        @extend .icon-button;
+        &:hover { color: $danger; }
     }
 </style>
