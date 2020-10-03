@@ -5,3 +5,5 @@ export enum AppEvents {
     REMOVE_TASK = "removeTask",
     CLEAR_COMPLETED = "clearCompleted"
 }
+
+export const TASK_TITLE_MAX_LENGTH = 50;

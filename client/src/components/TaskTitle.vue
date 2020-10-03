@@ -18,8 +18,8 @@
 
 <style scoped lang="scss">
     .title {
+        @extend .transitionable;
         font-size: 1rem;
-        transition: all .2s 0s ease-out;
         &.done {
             opacity: .3;
             text-decoration: line-through;

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const TASK_TITLE_MAX_LENGTH = 96;
+const TASK_TITLE_MAX_LENGTH = 50;
 
 export const TaskSchema = new Schema({
     id: {

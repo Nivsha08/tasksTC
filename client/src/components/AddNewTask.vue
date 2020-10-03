@@ -2,17 +2,18 @@
     <div class="new-task-wrapper">
         <transition name="fade" mode="out-in" class="transition-group">
             <div key="1" class="add-new-task" v-if="!taskAddedIndication">
-                <input v-model="title" type="text" class="input" :placeholder="placeholder"
-                       @keypress.enter="done" @keydown.esc="cancel">
                 <div class="prepend-icons">
                     <FontAwesomeIcon icon="chevron-right" class="icon chevron" />
                 </div>
+                <input v-model="title" type="text" class="input" :placeholder="placeholder"
+                       :maxlength="titleMaxLength" @keypress.enter="done" @keydown.esc="cancel">
+                <div class="length-limit">{{ lengthLimitIndication }}</div>
                 <div class="append-icons">
-                    <FontAwesomeIcon @click="cancel" icon="times" class="icon cancel-button" />
-                    <FontAwesomeIcon @click="done" icon="check" class="icon done-button" />
+                    <ClickableIcon @click="cancel" icon="times" class="icon cancel-button" />
+                    <ClickableIcon @click="done" icon="check" class="icon done-button" />
                 </div>
             </div>
-            <div key="2" class="task-added" v-if="taskAddedIndication">
+            <div key="2" class="task-added" v-else>
                 {{ taskAddedMessage }}
             </div>
         </transition>
@@ -25,10 +26,12 @@
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
     import Task from "../../../server/src/models/Task";
     import {ActionTypes} from "@/store/actions";
-    import {AppEvents} from "@/constants";
+    import {AppEvents, TASK_TITLE_MAX_LENGTH} from "@/constants";
+    import ClickableIcon from "@/components/ClickableIcon.vue";
 
     @Component({
         components: {
+            ClickableIcon,
             FontAwesomeIcon
         }
     })
@@ -37,9 +40,14 @@
         readonly placeholder: string = "Add a new task";
         readonly taskAddedMessage: string = "done";
         readonly indicationDurationMs: number = 2500;
+        readonly titleMaxLength = TASK_TITLE_MAX_LENGTH;
         title: string = "";
         taskAddedIndication: boolean = false;
         inProgress: boolean = false;
+
+        get lengthLimitIndication(): string {
+            return `${this.title.length} / ${this.titleMaxLength}`;
+        }
 
         cancel(): void {
             this.title = "";
@@ -78,7 +86,6 @@
         width: 100%;
         display: flex;
         flex-direction: row;
-        position: relative;
         margin-bottom: 1.5rem;
     }
     .transition-group {
@@ -103,14 +110,14 @@
         letter-spacing: .2rem;
     }
     .input {
+        @extend .transitionable;
         flex-basis: 100%;
-        padding: .8rem 3rem;
+        padding: .8rem 1.5rem;
         font-size: .9rem;
         border: none;
         border-bottom: 1px solid $primary;
-        transition: all .3s 0s ease-out;
         &::placeholder {
-            transition: all .3s 0s ease-out;
+            @extend .transitionable;
         }
         &:focus {
             &::placeholder {
@@ -118,12 +125,18 @@
             }
             outline: none;
             color: initial;
-            border-color: $primary;
-            background-color: lighten($foreground, 3%);
         }
     }
+    .length-limit {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        width: 70px;
+        font-size: .7rem;
+        color: transparentize($darkprimary, .5);
+    }
     .icons-wrapper {
-        position: absolute;
         height: 100%;
         display: flex;
         align-items: center;
@@ -141,12 +154,12 @@
         top: 0;
         right: 0;
         .icon {
+            @extend .transitionable;
             cursor: pointer;
             opacity: .8;
             font-size: 1.2rem;
             margin: 0 1rem;
             color: transparentize($black, .7);
-            transition: all .3s 0s ease-out;
             &.done-button { color: $success; }
             &.cancel-button:hover { color: $danger; }
         }

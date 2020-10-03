@@ -71,6 +71,7 @@
 
 <style scoped lang="scss">
     .wrapper {
+        @extend .transitionable;
         border-radius: 2rem;
         background-color: $white;
         width: 60%;
@@ -78,7 +79,6 @@
         height: 450px;
         padding: 2rem 3rem;
         box-shadow: 0 0 30px transparentize($darkprimary, .4);
-        transition: all .5s 0s ease-out;
     }
     .tasks-wrapper {
         height: 100%;
