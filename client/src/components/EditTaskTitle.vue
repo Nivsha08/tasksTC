@@ -14,7 +14,7 @@
     import Vue, {PropType} from "vue";
     import Component from "vue-class-component";
     import {Prop} from "vue-property-decorator";
-    import Task from "../../../server/src/models/Task";
+    import Task from "../../../models/Task";
     import ClickableIcon from "@/components/ClickableIcon.vue";
     import {TASK_TITLE_MAX_LENGTH} from "@/constants";
 

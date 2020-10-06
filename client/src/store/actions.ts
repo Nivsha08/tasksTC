@@ -2,8 +2,8 @@ import Axios, {AxiosResponse} from "axios";
 import {MutationTypes} from "@/store/mutations";
 import {ActionContext} from "vuex";
 import {State} from "@/store/state";
-import TasksCollection from "../../../server/src/models/TasksCollection";
-import Task, {ITask} from "../../../server/src/models/Task";
+import TasksCollection from "../../../models/TasksCollection";
+import Task, {ITask} from "../../../models/Task";
 
 const serverConfig = require( "@/../serverconfig.json");
 

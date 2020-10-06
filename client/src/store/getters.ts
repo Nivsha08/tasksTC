@@ -1,5 +1,5 @@
 import {State} from "@/store/state";
-import TasksCollection from "../../../server/src/models/TasksCollection";
+import TasksCollection from "../../../models/TasksCollection";
 
 export enum GetterTypes {
     GET_TASKS = "GET_TASKS"

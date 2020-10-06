@@ -1,5 +1,5 @@
 import {State} from "@/store/state";
-import Task from "../../../server/src/models/Task";
+import Task from "../../../models/Task";
 
 export enum MutationTypes {
     SET_TASKS = "SET_TASKS"

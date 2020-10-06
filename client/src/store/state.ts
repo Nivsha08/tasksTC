@@ -1,4 +1,4 @@
-import TasksCollection from "../../../server/src/models/TasksCollection";
+import TasksCollection from "../../../models/TasksCollection";
 
 export type State = {
     tasks: TasksCollection | null

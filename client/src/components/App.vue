@@ -10,7 +10,7 @@
     import Component from "vue-class-component";
     import Header from "@/components/Header.vue";
     import TasksContainer from "@/components/TasksContainer.vue";
-    import TasksCollection from "../../../server/src/models/TasksCollection";
+    import TasksCollection from "../../../models/TasksCollection";
     import {ActionTypes} from "@/store/actions";
     import {GetterTypes} from "@/store/getters";
 

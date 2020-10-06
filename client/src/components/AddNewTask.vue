@@ -24,7 +24,7 @@
     import Vue from "vue";
     import Component from "vue-class-component";
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-    import Task from "../../../server/src/models/Task";
+    import Task from "../../../models/Task";
     import {ActionTypes} from "@/store/actions";
     import {AppEvents, TASK_TITLE_MAX_LENGTH} from "@/constants";
     import ClickableIcon from "@/components/ClickableIcon.vue";

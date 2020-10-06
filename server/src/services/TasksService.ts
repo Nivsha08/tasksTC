@@ -1,5 +1,5 @@
 import {DBConfig} from "../database/dbconfig";
-import Task, {ITask} from "../models/Task";
+import Task, {ITask} from "../../../models/Task";
 import {Task as TaskModel} from "../database/models";
 
 const mongoose = require("mongoose");

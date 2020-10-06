@@ -19,7 +19,7 @@
     import Vue, {PropType} from "vue";
     import Component from "vue-class-component";
     import {Prop} from "vue-property-decorator";
-    import TasksCollection from "../../../server/src/models/TasksCollection";
+    import TasksCollection from "../../../models/TasksCollection";
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
     import ClearCompleted from "@/components/ClearCompleted.vue";
     import {AppEvents} from "@/constants";

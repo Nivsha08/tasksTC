@@ -1,7 +1,7 @@
-import Server, {HttpMethods} from "./models/Server";
-import TasksCollection from "./models/TasksCollection";
+import Server, {HttpMethods} from "./Server";
+import TasksCollection from "../../models/TasksCollection";
 import {config as dbConfig} from "./database/dbconfig";
-import Task from "./models/Task";
+import Task from "../../models/Task";
 import TasksService from "./services/TasksService";
 
 const server: Server = new Server();

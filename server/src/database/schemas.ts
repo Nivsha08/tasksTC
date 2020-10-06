@@ -1,3 +1,5 @@
+import {TaskPriority} from "../../../models/Task";
+
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
@@ -15,6 +17,16 @@ export const TaskSchema = new Schema({
     },
     completed: {
         type: Boolean,
+        required: true
+    },
+    priority: {
+        type: String,
+        enum: [
+            TaskPriority.LOW,
+            TaskPriority.REGULAR,
+            TaskPriority.HIGH,
+            TaskPriority.URGENT
+        ],
         required: true
     }
 });

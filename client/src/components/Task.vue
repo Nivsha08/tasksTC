@@ -22,7 +22,7 @@
     import {AppEvents} from "@/constants";
     import EditTaskTitle from "@/components/EditTaskTitle.vue";
     import TaskTitle from "@/components/TaskTitle.vue";
-    import {ITask} from "../../../server/src/models/Task";
+    import {ITask} from "../../../models/Task";
     import ClickableIcon from "@/components/ClickableIcon.vue";
 
     @Component({

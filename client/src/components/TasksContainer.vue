@@ -17,9 +17,9 @@
     import Vue, {PropType} from "vue";
     import Component from "vue-class-component";
     import {Prop} from "vue-property-decorator";
-    import TasksCollection from "../../../server/src/models/TasksCollection";
+    import TasksCollection from "../../../models/TasksCollection";
     import Task from "@/components/Task";
-    import TaskModel from "../../../server/src/models/Task";
+    import TaskModel from "../../../models/Task";
     import TasksSummary from "@/components/TasksSummary.vue";
     import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
     import AddNewTask from "@/components/AddNewTask.vue";
