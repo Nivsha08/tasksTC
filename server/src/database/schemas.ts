@@ -23,7 +23,7 @@ export const TaskSchema = new Schema({
         type: String,
         enum: [
             TaskPriority.LOW,
-            TaskPriority.REGULAR,
+            TaskPriority.MID,
             TaskPriority.HIGH,
             TaskPriority.URGENT
         ],

@@ -1,5 +1,6 @@
 <template>
     <div class="task-wrapper" :class="{ disabled, editing: editInProgress }">
+        <TaskPriorityBadge :priority="task.priority" class="priority-badge" />
         <EditTaskTitle v-if="editInProgress" :task="task" @done="onEditDone" @cancel="onEditCancel" />
         <TaskTitle v-else :task="task" />
         <div class="buttons">
@@ -24,9 +25,11 @@
     import TaskTitle from "@/components/TaskTitle.vue";
     import {ITask} from "../../../models/Task";
     import ClickableIcon from "@/components/ClickableIcon.vue";
+    import TaskPriorityBadge from "@/components/TaskPriority.vue";
 
     @Component({
         components: {
+            TaskPriorityBadge,
             TaskTitle,
             EditTaskTitle,
             BFormCheckbox,
@@ -105,6 +108,9 @@
             background-color: transparentize($primary, .9);
             border-color: transparentize($primary, .3);
         }
+    }
+    .priority-badge {
+        margin-right: 1rem;
     }
     .buttons {
         display: flex;

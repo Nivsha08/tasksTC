@@ -10,7 +10,7 @@ export interface ITask {
 
 export enum TaskPriority {
     LOW = "low",
-    REGULAR = "regular",
+    MID = "mid",
     HIGH = "high",
     URGENT = "urgent"
 }
@@ -26,7 +26,7 @@ export default class Task implements ITask {
         this.id = IDGenerator.generate();
         this.title = title;
         this.completed = false;
-        this.priority = TaskPriority.REGULAR;
+        this.priority = TaskPriority.MID;
     }
 
     static parse(task: ITask) {

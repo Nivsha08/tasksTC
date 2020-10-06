@@ -19,6 +19,8 @@
 <style scoped lang="scss">
     .title {
         @extend .transitionable;
+        width: 100%;
+        text-align: start;
         font-size: 1rem;
         &.done {
             opacity: .3;
