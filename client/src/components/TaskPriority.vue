@@ -1,5 +1,7 @@
 <template>
-    <Badge :text="priority" :class="{ [priority]: true }" class="badge" />
+    <Badge :text="priority" :class="{ [priority]: true }" class="badge"
+           @click="$emit('change', 'urgent')" />
+    <!--todo: add a selector for new priority and connect it to click event -->
 </template>
 
 <script lang="ts">
@@ -19,7 +21,7 @@
             type: String,
             default: TaskPriority.LOW,
             validator: (value: string): boolean =>
-                (Object.values(TaskPriority).indexOf(value) > 0)
+                (Object.values(TaskPriority).indexOf(value) >= 0)
         }) priority!;
     }
 </script>

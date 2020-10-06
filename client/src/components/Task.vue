@@ -1,6 +1,6 @@
 <template>
     <div class="task-wrapper" :class="{ disabled, editing: editInProgress }">
-        <TaskPriorityBadge :priority="task.priority" class="priority-badge" />
+        <TaskPriorityBadge :priority="task.priority" @change="setTaskPriority" class="priority-badge" />
         <EditTaskTitle v-if="editInProgress" :task="task" @done="onEditDone" @cancel="onEditCancel" />
         <TaskTitle v-else :task="task" />
         <div class="buttons">
@@ -23,7 +23,7 @@
     import {AppEvents} from "@/constants";
     import EditTaskTitle from "@/components/EditTaskTitle.vue";
     import TaskTitle from "@/components/TaskTitle.vue";
-    import {ITask} from "../../../models/Task";
+    import {ITask, TaskPriority} from "../../../models/Task";
     import ClickableIcon from "@/components/ClickableIcon.vue";
     import TaskPriorityBadge from "@/components/TaskPriority.vue";
 
@@ -65,6 +65,11 @@
 
         async toggleTaskStatus(): void {
             this.task.completed = !this.task.completed;
+            await this.updateTask(this.task);
+        }
+
+        async setTaskPriority(priority: TaskPriority): Promise<void> {
+            this.task.priority = priority;
             await this.updateTask(this.task);
         }
 
